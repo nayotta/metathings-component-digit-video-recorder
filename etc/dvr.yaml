@@ -1,0 +1,36 @@
+debug:
+  name: digit_video_recorder
+  service:
+    scheme: mtp+grpc
+    host: 0.0.0.0
+    port: 13401
+  verbose: true
+  log:
+    level: debug
+  heartbeat:
+    interval: 15
+  credential:
+    domain: default
+    id: fc0d7d3e0e64434e83e9986d683db019
+    secret: Js34x3pg6YF7HHikVRxFHQ+dThNYFGzXpH4STTF2Hho=
+  service_endpoint:
+    device:
+      address: localhost:5002
+      plain_text: true
+    default:
+      address: api.dev.metathings.nayotta.com:443
+  driver:
+    name: ffmpeg
+    input:
+      format: rtsp
+      file: "rtsp://admin:a12345678@Dahua-Camera:554/cam/realmonitor?channel=1&subtype=0"
+    output:
+      file: "/tmp/dvr/video/{.id}.mp4"
+      segment_time: 10
+      format: mp4
+    video:
+      codec:
+        name: copy
+    storage:
+      name: leveldb
+      file: /tmp/dvr/dvr.ldb

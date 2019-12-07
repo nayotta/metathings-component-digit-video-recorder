@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package ai.metathings.component.service.digit_video_recorder;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+
+message Record {
+	string id = 1;
+	google.protobuf.Timestamp start_at = 2;
+	google.protobuf.Timestamp end_at = 3;
+}
+
+message OpRecord {
+	google.protobuf.StringValue id = 1;
+	google.protobuf.Timestamp start_at = 2;
+	google.protobuf.Timestamp end_at = 3;
+}
+
+message GetRecordRequest {
+	OpRecord record = 1;
+}
+
+message GetRecordResponse {
+	Record record = 1;
+}
+
+message ListRecordsRequest {
+	message range_ {
+		google.protobuf.Timestamp start_at = 1;
+		google.protobuf.Timestamp end_at = 2;
+	}
+
+	oneof filter {
+		range_ range = 1;
+	}
+}
+
+message ListRecordsResponse {
+	repeated Record records = 1;
+}
+
+service DigitVideoRecorderService {
+	rpc Start(google.protobuf.Empty) returns (google.protobuf.Empty) {}
+	rpc Stop(google.protobuf.Empty) returns (google.protobuf.Empty) {}
+	rpc GetRecord(GetRecordRequest) returns (GetRecordResponse) {}
+	rpc ListRecords(ListRecordsRequest) returns (ListRecordsResponse) {}
+}

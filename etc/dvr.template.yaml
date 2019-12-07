@@ -1,0 +1,36 @@
+debug:
+  name: <module-name>
+  service:
+    scheme: mtp+grpc
+    host: <listen-host>
+    port: <listen-port>
+  verbose: true
+  log:
+    level: <log-level>
+  heartbeat:
+    interval: 15
+  credential:
+    domain: <credential-domain>
+    id: <credential-id>
+    secret: <credential-secret>
+  service_endpoint:
+    device:
+      address: <device-address>
+      plain_text: true
+    default:
+      address: <metathingsd-address>
+  driver:
+    name: ffmpeg
+    input:
+      format: <input-format>
+      file: <input-uri>
+    output:
+      file: <output-path>
+      segment_time: 300  # output file segment time, seconds.
+      format: <output-format>
+    video:
+      codec:
+        name: copy
+    storage:
+      name: leveldb
+      file: <storage-path>
