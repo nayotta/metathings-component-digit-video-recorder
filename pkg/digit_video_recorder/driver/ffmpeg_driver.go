@@ -93,8 +93,10 @@ _watch_file_loop:
 				continue
 			}
 
-			if err := drv.process_file(cur); err != nil {
-				drv.get_logger().WithError(err).WithField("file", name).Warningf("failed to process file")
+			if cur != "" {
+				if err := drv.process_file(cur); err != nil {
+					drv.get_logger().WithError(err).WithField("file", name).Warningf("failed to process file")
+				}
 			}
 			cur = name
 		}
@@ -281,11 +283,11 @@ func (drv *FFmpegDigitVideoRecorderDriver) process_file(path string) error {
 	}
 	r.Path = buf.String()
 
-	if err = drv.storage.SetRecord(r); err != nil {
+	if err = os.Rename(path, r.Path); err != nil {
 		return err
 	}
 
-	if err = os.Rename(path, r.Path); err != nil {
+	if err = drv.storage.SetRecord(r); err != nil {
 		return err
 	}
 
